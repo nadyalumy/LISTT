@@ -165,6 +165,9 @@ class VariantSimilarity:
                     for key, value in row_dict.items():
                         writer.writerow([key,value])
 
+                # output pymol session of the variant that the input genome corresponds to
+                #pymol_file = "OspA_protein_" + str(self.variant) + ".pse"
+
             else:
                 print('align_to_refs:run() - no match to known variants...')
                 print('align_to_refs:run() - aligning to known sequences...')
@@ -178,6 +181,7 @@ class VariantSimilarity:
             self.variant = 'Unknown'
             self.serotype = 'Unknown'
             self.species = 'Unknown'
+            # bad sequencing, not able to reconstruct full gene sequence during alignment and assembly
         self.write_report()
 
 
