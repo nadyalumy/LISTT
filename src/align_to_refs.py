@@ -137,6 +137,24 @@ class VariantSimilarity:
                 print('align_to_refs:run() - sequence matches variant {}'.format(self.variant))
                 self.serotype = self.sero_tbl[self.variant][0]
                 self.species = self.sero_tbl[self.variant][1]
+                
+                # produce new fasta file of the OspA protein sequence with predicted epitope residues capitalized
+                epitope_file = '{0}/aln/{1}/{1}_prot_epitope.fasta'.format(self.path, self.sample)
+                seq_epitope_df = pd.read_csv('variants/ospA_protein_withEpitopes.csv')
+                variant_id = 'OspA_protein_' + str(self.variant)
+                mask = seq_epitope_df['id'] == variant_id
+                # select the sequence corresponding to this variant
+                capitalized_seq = seq_epitope_df.loc[mask, 'sequence'].iloc[0]
+                with open(epitope_file, 'w') as epi:
+                    epi.write('>consensus_with_epitope\n')
+                    epi.write(capitalized_seq + '\n')
+
+                # output csv file of the predicted epitope residues for this variant, along with RSA values of each residue
+                epitope_csv = '{0}/aln/{1}/{1}_prot_epitope.csv'.format(self.path, self.sample)
+                rsa_epitope_df = pd.read_csv('variants/bepipred_predicted_epitopes_rsa.csv')
+                variant_df = rsa_epitope_df[rsa_epitope_df['protein'] == variant_id]
+                variant_df.to_csv(epitope_csv,index=False)
+
             else:
                 print('align_to_refs:run() - no match to known variants...')
                 print('align_to_refs:run() - aligning to known sequences...')
