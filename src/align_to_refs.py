@@ -155,6 +155,16 @@ class VariantSimilarity:
                 variant_df = rsa_epitope_df[rsa_epitope_df['protein'] == variant_id]
                 variant_df.to_csv(epitope_csv,index=False)
 
+                # output csv file of the vaccine variant and serotype that best matches the input variant
+                epitope_analysis_csv = '{0}/aln/{1}/{1}_prot_epitope_analysis.csv'.format(self.path, self.sample)
+                epi_analysis_df = pd.read_csv('variants/epitope_analysis.csv')
+                epi_variant_df = epi_analysis_df[epi_analysis_df['protein'] == self.variant]
+                row_dict = epi_variant_df.iloc[0].to_dict()
+                with open(epitope_analysis_csv,'w',newline='') as f:
+                    writer = csv.writer(f)
+                    for key, value in row_dict.items():
+                        writer.writerow([key,value])
+
             else:
                 print('align_to_refs:run() - no match to known variants...')
                 print('align_to_refs:run() - aligning to known sequences...')
