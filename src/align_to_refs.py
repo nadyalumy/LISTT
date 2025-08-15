@@ -7,6 +7,7 @@ Python 3.6
 python align_to_refs.py consensus_fasta reference_seqs_fasta
 """
 import os
+import shutil
 import csv
 import sys
 from subprocess import call, DEVNULL, STDOUT
@@ -166,7 +167,15 @@ class VariantSimilarity:
                         writer.writerow([key,value])
 
                 # output pymol session of the variant that the input genome corresponds to
-                #pymol_file = "OspA_protein_" + str(self.variant) + ".pse"
+                final_pymol_file = '{0}/aln/{1}/{1}_prot_pymol.pse'.format(self.path, self.sample)
+                pymol_session = "variants/pymol_sessions/OspA_protein_" + str(self.variant) + ".pse"
+                try:
+                    shutil.copy2(pymol_session,final_pymol_file)
+                    print(f"align_to_refs:run() - copied PyMOL session to {final_pymol_file}")
+                except FileNotFoundError:
+                    print(f"align_to_refs:run() - {pymol_sesion} not found, no session copied")
+                except Exception as e:
+                    print(f"align_to_refs:run() - error copying PyMOL session")
 
             else:
                 print('align_to_refs:run() - no match to known variants...')
