@@ -1,4 +1,4 @@
-name: ospa_ist
+name: pymol_test2
 channels:
   - r
   - conda-forge
@@ -98,10 +98,9 @@ dependencies:
   - perl-xml-sax=1.02=pl5321hdfd78af_1
   - perl-xml-sax-base=1.09=pl5321hdfd78af_1
   - pip=23.3.1=pyhd8ed1ab_0
-  - python=3.11.6=hab00c5b_0_cpython
+  - python=3.10
   - python-dateutil=2.8.2=pyhd8ed1ab_0
   - python-tzdata=2023.3=pyhd8ed1ab_0
-  - python_abi=3.11=4_cp311
   - pytz=2023.3.post1=pyhd8ed1ab_0
   - readline=8.2=h8228510_1
   - samtools=1.18=h50ea8bc_1
